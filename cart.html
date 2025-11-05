@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Shopping Cart - Wonder Electronics | Checkout Your Electronics</title>
+    <meta name="title" content="Shopping Cart - Wonder Electronics | Checkout Your Electronics">
+    <meta name="description" content="Review your shopping cart at Wonder Electronics. Complete your purchase of premium consumer electronics with secure checkout and fast delivery in Rwanda.">
+    <meta name="keywords" content="Wonder Electronics cart, Wonder Electronics checkout, shopping cart Wonder Electronics, buy electronics Wonder Electronics">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://wonderelectronics.com/cart.html">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" title="Wonder Electronics - Premium Consumer Electronics Store Rwanda">
+                    <img id="site-logo" src="logo.png" alt="Wonder Electronics Logo - Premium Consumer Electronics Store in Kigali Rwanda" title="Wonder Electronics" onerror="this.style.display='none'; this.parentElement.style.background='rgba(255,255,255,0.2)';">
+                </a>
+            </div>
+            <a href="cart.html" class="mobile-cart-btn" title="View Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-badge" id="mobile-cart-count">0</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html" class="active">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li id="login-menu-item"><button class="btn btn-primary btn-small" onclick="openLoginModal()">Login</button></li>
+                <li class="currency-menu-item">
+                    <label for="mobile-currency-selector" style="display: none;">Currency</label>
+                    <select id="mobile-currency-selector" class="currency-selector-menu">
+                        <option value="RWF">RWF</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </li>
+                <li class="settings-menu-item"><button class="btn btn-secondary btn-small settings-btn" onclick="openSettingsModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Settings
+                </button></li>
+                <li id="user-menu-item" style="display: none;">
+                    <span id="user-name-display"></span>
+                    <button class="btn btn-primary btn-small" onclick="openHistoryModal()" style="margin-left: 0.5rem;" title="View History">📜 History</button>
+                    <button class="btn btn-secondary btn-small" onclick="logoutUser()" style="margin-left: 0.5rem;">Logout</button>
+                </li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+            <div class="currency-selector-container">
+                <select id="currency-selector" class="currency-selector">
+                    <option value="RWF">RWF</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </div>
+            <div class="theme-toggle-container">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-icon">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-page">
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            <div class="cart-content">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded here -->
+                    <div class="empty-cart">
+                        <p>Your cart is empty</p>
+                        <a href="products.html" class="btn btn-primary">Start Shopping</a>
+                    </div>
+                </div>
+                <div class="cart-summary" id="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-item" id="tax-row" style="display: none;">
+                        <span id="tax-label">Tax:</span>
+                        <span id="tax">$0.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="checkout-btn" onclick="openPaymentModal()" disabled>Proceed to Payment</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <h2>Complete Your Payment</h2>
+            
+            <div class="payment-info-box">
+                <h3>📱 Mobile Money Payment</h3>
+                <p id="payment-number-display" style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin: 1rem 0;">+250787070049</p>
+                <p id="payment-instructions-display" style="color: var(--text-light); font-size: 0.9rem;">Please send your payment to this number and fill in your details below.</p>
+            </div>
+            
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="payment-name">Full Names *</label>
+                    <input type="text" id="payment-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment-mobile">Mobile Number *</label>
+                    <input type="tel" id="payment-mobile" required placeholder="+250...">
+                </div>
+                <div class="form-group">
+                    <label for="payment-address">Delivery Address *</label>
+                    <textarea id="payment-address" rows="3" required placeholder="Enter your complete delivery address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="payment-transaction">Transaction ID *</label>
+                    <input type="text" id="payment-transaction" required placeholder="Enter your payment transaction ID">
+                    <small>The transaction ID from your mobile money payment</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+                    <button type="button" class="btn btn-secondary btn-block" onclick="closePaymentModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <section class="social-media-section">
+        <div class="container">
+            <h2 class="section-title">Follow Us</h2>
+            <div class="social-media-grid" id="social-media-grid">
+                <!-- Social media cards will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 id="footer-brand-title">Wonder Electronics</h3>
+                    <p id="footer-brand-description">Your trusted source for the latest consumer electronics</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p id="footer-contact-email">Email: wonderelectronics50@gmail.com</p>
+                    <p id="footer-contact-phone">Phone: +250787070049</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p id="footer-copyright">&copy; 2024 Wonder Electronics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div id="login-form-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-group" style="text-align: right; margin-top: -0.5rem;">
+                        <button type="button" class="btn-link" onclick="showForgotPassword()" style="background: none; border: none; color: var(--primary-color); cursor: pointer; text-decoration: underline; font-size: 0.9rem;">Forgot Password?</button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="showSignupForm()">Create New Account</button>
+                    </div>
+                </form>
+            </div>
+            <div id="signup-form-container" style="display: none;">
+                <h2>Sign Up</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                        <small>Must be a valid email address</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone (Optional)</label>
+                        <input type="tel" id="signup-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required minlength="6">
+                        <small>Must be at least 6 characters long</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="showLoginForm()">Already have an account? Login</button>
+                    </div>
+                </form>
+            </div>
+            <div id="forgot-password-container" style="display: none;">
+                <h2>Forgot Password</h2>
+                <form id="forgot-password-form">
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <input type="email" id="reset-email" required placeholder="Enter your registered email">
+                        <small>Enter the email address associated with your account</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-block">Request Password Reset</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="showLoginForm()">Back to Login</button>
+                    </div>
+                </form>
+                <div id="reset-request-success" style="display: none; text-align: center; padding: 1rem; background-color: #d1fae5; border-radius: 0.5rem; margin-top: 1rem;">
+                    <p style="color: #065f46; font-weight: 600; margin-bottom: 0.5rem;">✓ Request Accepted</p>
+                    <p style="color: #047857; font-size: 0.9rem;">Your request to reset password has been accepted. You will be given a new password via your email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="product-detail-modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeProductDetailModal()">&times;</span>
+            <div id="product-detail-content">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Button -->
+    <button class="chat-button" id="chat-button" onclick="openChatModal()" title="Chat with us">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Larger speech bubble (back) -->
+            <path d="M12 8C8.68629 8 6 10.6863 6 14V22C6 25.3137 8.68629 28 12 28H28V32C28 33.1046 28.8954 34 30 34C31.1046 34 32 33.1046 32 32V28H36C39.3137 28 42 25.3137 42 22V14C42 10.6863 39.3137 8 36 8H12Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Smaller speech bubble (front) -->
+            <path d="M18 16C15.7909 16 14 17.7909 14 20V26C14 28.2091 15.7909 30 18 30H24V32C24 32.5523 24.4477 33 25 33C25.5523 33 26 32.5523 26 32V30H30C32.2091 30 34 28.2091 34 26V20C34 17.7909 32.2091 16 30 16H18Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="chat-button-text">Chat</span>
+    </button>
+
+    <!-- Chat Modal -->
+    <div class="modal" id="chat-modal">
+        <div class="modal-content chat-modal-content">
+            <div class="chat-header">
+                <h3>💬 Chat with Wonder Electronics</h3>
+                <span class="close" onclick="closeChatModal()">&times;</span>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages will be loaded here -->
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+                <button class="btn btn-primary chat-send-btn" onclick="sendChatMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2>Settings</h2>
+            <div class="form-group">
+                <label><strong>Theme</strong></label>
+                <div class="theme-switch-container">
+                    <button class="theme-option-btn" id="light-theme-btn" onclick="setTheme('light')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <span>Light Mode</span>
+                    </button>
+                    <button class="theme-option-btn" id="dark-theme-btn" onclick="setTheme('dark')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <span>Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary btn-block" onclick="openUserGuideModal()">📖 User Guide</button>
+            </div>
+            <div class="form-group" style="margin-top: 1rem;">
+                <button class="btn btn-primary btn-block" onclick="openRulesPoliciesModal()">📋 Rules & Policies</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Guide Modal -->
+    <div class="modal" id="user-guide-modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeUserGuideModal()">&times;</span>
+            <h2>📖 User Guide</h2>
+            <div id="user-guide-content">
+                <!-- User guide content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules and Policies Modal -->
+    <div class="modal" id="rules-policies-modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeRulesPoliciesModal()">&times;</span>
+            <h2>📋 Wonder Electronics - Rules & Policies</h2>
+            <div id="rules-policies-content">
+                <!-- Rules and policies content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div class="modal" id="history-modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeHistoryModal()">&times;</span>
+            <h2>Your Activity History</h2>
+            <div class="history-tabs" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color);">
+                <button class="history-tab-btn active" onclick="switchHistoryTab('orders')" id="history-tab-orders">📦 Orders</button>
+                <button class="history-tab-btn" onclick="switchHistoryTab('messages')" id="history-tab-messages">💬 Messages</button>
+            </div>
+            <div id="history-content">
+                <!-- History content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+

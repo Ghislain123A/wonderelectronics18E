@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Wonder Electronics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <img id="site-logo" src="logo.png" alt="Wonder Electronics Logo" onerror="this.style.display='none'; this.parentElement.style.background='rgba(255,255,255,0.2)';">
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">View Site</a></li>
+                <li><a href="admin.html" class="active">Dashboard</a></li>
+                <li><a href="admin-products.html">Products</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><button class="btn btn-secondary btn-small" onclick="logoutAdmin()">Logout</button></li>
+                <li class="settings-menu-item"><button class="btn btn-secondary btn-small settings-btn" onclick="openSettingsModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Settings
+                </button></li>
+            </ul>
+            <div class="currency-selector-container">
+                <select id="currency-selector" class="currency-selector">
+                    <option value="RWF">RWF</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </div>
+            <div class="theme-toggle-container">
+                <button class="theme-toggle-btn" onclick="openSettingsModal()" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="admin-login-modal" style="display: block;">
+        <div class="modal-content" style="max-width: 450px;">
+            <h2 style="margin-bottom: 1.5rem;">Admin Login Required</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <section class="admin-dashboard" id="admin-content" style="display: none;">
+        <div class="container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <div class="notification-badge-container">
+                    <button class="btn btn-primary" onclick="showNotifications()">
+                        🔔 Notifications 
+                        <span class="notification-badge" id="notification-count">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Notifications Panel -->
+            <div class="notifications-panel" id="notifications-panel" style="display: none;">
+                <div class="notifications-header">
+                    <h3>Password Reset Requests</h3>
+                    <button class="close-notifications" onclick="hideNotifications()">&times;</button>
+                </div>
+                <div class="notifications-list" id="notifications-list">
+                    <!-- Notifications will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-info">
+                        <h3 id="total-products">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-info">
+                        <h3 id="total-orders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 id="total-revenue">$0.00</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-actions">
+                <a href="admin-products.html" class="btn btn-primary" data-permission="manage-products">Manage Products</a>
+                <button class="btn btn-primary" onclick="window.location.href='admin-orders.html'" data-permission="manage-orders">Manage Orders</button>
+                <button class="btn btn-primary" onclick="openProductAnalyticsModal()" data-permission="view-analytics">📊 Product Analytics</button>
+                <button class="btn btn-primary" onclick="openCategoriesModal()" data-permission="manage-categories">Manage Categories</button>
+                <button class="btn btn-primary" onclick="openHeroModal()" data-permission="manage-hero">Manage Hero Section</button>
+                <button class="btn btn-primary" onclick="openFeaturedProductsModal()" data-permission="manage-featured">Manage Featured Products</button>
+                <button class="btn btn-primary" onclick="openFooterModal()" data-permission="manage-footer">Manage Footer</button>
+                <button class="btn btn-primary" onclick="openAboutModal()" data-permission="manage-about">Manage About Us</button>
+                <button class="btn btn-primary" onclick="openContactModal()" data-permission="manage-contact">Edit Contact Info</button>
+                <button class="btn btn-primary" onclick="openSocialMediaModal()" data-permission="manage-social">Manage Social Media</button>
+                <button class="btn btn-primary" onclick="openSlideshowModal()" data-permission="manage-slideshow">Manage Slideshow</button>
+                <button class="btn btn-primary" onclick="openCurrencyRatesModal()" data-permission="manage-currency">Manage Currency Rates</button>
+                <button class="btn btn-primary" onclick="openUserGuideAdminModal()" data-permission="manage-user-guide">Manage User Guide</button>
+                <button class="btn btn-primary" onclick="openRulesPoliciesAdminModal()" data-permission="manage-rules">Manage Rules & Policies</button>
+                <button class="btn btn-primary" onclick="openTaxSettingsModal()" data-permission="manage-tax">Manage Tax Settings</button>
+                <button class="btn btn-primary" onclick="openPaymentInfoModal()" data-permission="manage-payment">Manage Payment Info</button>
+                <button class="btn btn-primary" onclick="openChatAdminModal()" data-permission="manage-chat">Manage Chat Messages</button>
+                <button class="btn btn-primary" onclick="window.location.href='admin-users.html'" data-permission="manage-users">Manage Users</button>
+                <button class="btn btn-primary" onclick="openLogoModal()" data-permission="manage-logo">🖼️ Manage Logo</button>
+                <button class="btn btn-primary" onclick="openSubAdminsModal()" id="manage-subadmins-btn" style="display: none;">👥 Manage Sub-Admins</button>
+                <button class="btn btn-secondary" onclick="clearAllData()" data-permission="clear-data">Clear All Data</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactModal()">&times;</span>
+            <h2>Edit Contact Information</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-phone">Phone</label>
+                    <input type="text" id="contact-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-address">Address</label>
+                    <input type="text" id="contact-address" placeholder="KN 84 St, Kigali - Rwanda" required>
+                    <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">This address will be used for Google Maps link. Changes will be visible on the client page immediately.</small>
+                </div>
+                <div class="form-group">
+                    <label for="contact-hours">Business Hours</label>
+                    <textarea id="contact-hours" rows="3" placeholder="Mon - Fri: 9:00 AM - 6:00 PM&#10;Sat: 10:00 AM - 4:00 PM" required></textarea>
+                    <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">Enter each line on a new line</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Contact Info</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeContactModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Social Media Modal -->
+    <div class="modal" id="social-media-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSocialMediaModal()">&times;</span>
+            <h2>Manage Social Media</h2>
+            <div id="social-media-list">
+                <!-- Social media items will be loaded here -->
+            </div>
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" onclick="addNewSocialMedia()">Add New Platform</button>
+                <button type="button" class="btn btn-secondary" onclick="closeSocialMediaModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tax Settings Modal -->
+    <div class="modal" id="tax-settings-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTaxSettingsModal()">&times;</span>
+            <h2>Manage Tax Settings</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Configure tax settings for checkout. Tax will be applied to cart subtotals if enabled.</p>
+            
+            <form id="tax-settings-form">
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="tax-enabled" onchange="updateTaxEnabledDisplay()">
+                        Enable Tax
+                    </label>
+                    <small>Check this box to apply tax to orders</small>
+                </div>
+                
+                <div class="form-group" id="tax-rate-group">
+                    <label for="tax-rate">Tax Rate (%)</label>
+                    <input type="number" id="tax-rate" step="0.01" min="0" max="100" required placeholder="0">
+                    <small>Enter the tax percentage (e.g., 10 for 10%)</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Tax Settings</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeTaxSettingsModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Categories Modal -->
+    <div class="modal" id="categories-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCategoriesModal()">&times;</span>
+            <h2>Manage Categories</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Add, edit, or remove product categories. Categories will appear on the homepage for customers to browse.</p>
+            
+            <div id="categories-list">
+                <!-- Categories will be loaded here -->
+            </div>
+            
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" onclick="addNewCategory()">Add New Category</button>
+                <button type="button" class="btn btn-secondary" onclick="closeCategoriesModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Modal -->
+    <div class="modal" id="footer-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFooterModal()">&times;</span>
+            <h2>Manage Footer</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Edit footer content that appears on all client pages.</p>
+            
+            <form id="footer-form">
+                <div class="form-group">
+                    <label for="footer-brand-title-input">Brand Title</label>
+                    <input type="text" id="footer-brand-title-input" required placeholder="Wonder Electronics">
+                </div>
+                <div class="form-group">
+                    <label for="footer-brand-description-input">Brand Description</label>
+                    <input type="text" id="footer-brand-description-input" required placeholder="Your trusted source for the latest consumer electronics">
+                </div>
+                <div class="form-group">
+                    <label for="footer-contact-email-input">Contact Email</label>
+                    <input type="email" id="footer-contact-email-input" required placeholder="wonderelectronics50@gmail.com">
+                </div>
+                <div class="form-group">
+                    <label for="footer-contact-phone-input">Contact Phone</label>
+                    <input type="tel" id="footer-contact-phone-input" required placeholder="+250787070049">
+                </div>
+                <div class="form-group">
+                    <label for="footer-copyright-input">Copyright Text</label>
+                    <input type="text" id="footer-copyright-input" required placeholder="© 2024 Wonder Electronics. All rights reserved.">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Footer</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeFooterModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Info Modal -->
+    <div class="modal" id="payment-info-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePaymentInfoModal()">&times;</span>
+            <h2>Manage Payment Information</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Edit the mobile money payment number and instructions that appear in the payment modal on the cart page.</p>
+            
+            <form id="payment-info-form">
+                <div class="form-group">
+                    <label for="payment-info-number">Mobile Money Payment Number</label>
+                    <input type="tel" id="payment-info-number" required placeholder="+250787070049">
+                    <small>The phone number where customers should send their mobile money payment</small>
+                </div>
+                <div class="form-group">
+                    <label for="payment-info-instructions">Payment Instructions</label>
+                    <textarea id="payment-info-instructions" rows="3" required placeholder="Please send your payment to this number and fill in your details below."></textarea>
+                    <small>Instructions displayed to customers in the payment modal</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Payment Info</button>
+                    <button type="button" class="btn btn-secondary" onclick="closePaymentInfoModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Admin Modal -->
+    <div class="modal" id="chat-admin-modal" style="z-index: 3000;">
+        <div class="modal-content" style="max-width: 95%; width: 95%; height: 95vh; padding: 1.5rem;">
+            <span class="close" onclick="closeChatAdminModal()">&times;</span>
+            <h2 style="margin-bottom: 0.5rem;">💬 Chat Management</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">View and reply to customer messages</p>
+            
+            <!-- Conversations List - Row Format -->
+            <div id="chat-conversations-row" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; max-height: 200px; overflow-y: auto; padding: 0.5rem;">
+                <!-- Conversations will be loaded here as cards -->
+            </div>
+            
+            <!-- Open Chat Windows Container -->
+            <div id="chat-windows-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1rem; max-height: calc(95vh - 300px); overflow-y: auto; padding: 0.5rem;">
+                <!-- Individual chat windows will be created here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Currency Rates Modal -->
+    <div class="modal" id="currency-rates-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCurrencyRatesModal()">&times;</span>
+            <h2>Manage Currency Conversion Rates</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Update exchange rates for accurate price conversion. RWF is the base currency (1 RWF = 1). Enter rates as conversion multipliers.</p>
+            
+            <form id="currency-rates-form">
+                <div class="form-group">
+                    <label for="usd-rate">USD Rate (1 USD = ? RWF)</label>
+                    <input type="number" id="usd-rate" step="0.01" min="0.01" required placeholder="1300">
+                    <small>Enter how many RWF equal 1 USD (e.g., 1300 means 1 USD = 1300 RWF)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eur-rate">EUR Rate (1 EUR = ? RWF)</label>
+                    <input type="number" id="eur-rate" step="0.01" min="0.01" required placeholder="1413">
+                    <small>Enter how many RWF equal 1 EUR (e.g., 1413 means 1 EUR = 1413 RWF)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gbp-rate">GBP Rate (1 GBP = ? RWF)</label>
+                    <input type="number" id="gbp-rate" step="0.01" min="0.01" required placeholder="1645">
+                    <small>Enter how many RWF equal 1 GBP (e.g., 1645 means 1 GBP = 1645 RWF)</small>
+                </div>
+                
+                <div class="form-group" style="background-color: var(--bg-color); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                    <h4 style="margin-top: 0;">Current Conversion Rates</h4>
+                    <div id="current-rates-display" style="font-size: 0.9rem; color: var(--text-light);">
+                        <!-- Current rates will be displayed here -->
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Currency Rates</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCurrencyRatesModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Featured Products Modal -->
+    <div class="modal" id="featured-products-modal" style="max-width: 900px;">
+        <div class="modal-content">
+            <span class="close" onclick="closeFeaturedProductsModal()">&times;</span>
+            <h2>Manage Featured Products</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                <!-- Available Products -->
+                <div>
+                    <h3>Available Products</h3>
+                    <div id="available-products-list" style="max-height: 400px; overflow-y: auto; border: 2px solid var(--border-color); border-radius: 0.5rem; padding: 1rem;">
+                        <!-- Available products will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Featured Products -->
+                <div>
+                    <h3>Featured Products (in order)</h3>
+                    <div id="featured-products-list" style="max-height: 400px; overflow-y: auto; border: 2px solid var(--border-color); border-radius: 0.5rem; padding: 1rem;">
+                        <!-- Featured products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeFeaturedProductsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section Modal -->
+    <div class="modal" id="hero-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeHeroModal()">&times;</span>
+            <h2>Manage Hero Section</h2>
+            <form id="hero-form">
+                <div class="form-group">
+                    <label for="hero-title-input">Title</label>
+                    <input type="text" id="hero-title-input" required placeholder="Welcome to Wonder Electronics">
+                </div>
+                <div class="form-group">
+                    <label for="hero-subtitle-input">Subtitle</label>
+                    <input type="text" id="hero-subtitle-input" required placeholder="Discover the latest in consumer electronics">
+                </div>
+                <div class="form-group">
+                    <label for="hero-button-text-input">Button Text</label>
+                    <input type="text" id="hero-button-text-input" required placeholder="Shop Now">
+                </div>
+                <div class="form-group">
+                    <label for="hero-button-link-input">Button Link (Optional)</label>
+                    <input type="text" id="hero-button-link-input" placeholder="products.html">
+                    <small>Leave empty to use default (products.html) or enter a custom path/URL</small>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Hero Section</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeHeroModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Slideshow Modal -->
+    <div class="modal" id="slideshow-modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSlideshowModal()">&times;</span>
+            <h2>Manage Marketing Slideshow</h2>
+            <div id="slideshow-list">
+                <!-- Slideshow items will be loaded here -->
+            </div>
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" onclick="addNewSlide()">Add New Slide</button>
+                <button type="button" class="btn btn-secondary" onclick="closeSlideshowModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close" onclick="closeSettingsModal()">&times;</span>
+            <h2>Settings</h2>
+            <div class="form-group">
+                <label><strong>Theme</strong></label>
+                <div class="theme-switch-container">
+                    <button class="theme-option-btn" id="light-theme-btn" onclick="setTheme('light')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <span>Light Mode</span>
+                    </button>
+                    <button class="theme-option-btn" id="dark-theme-btn" onclick="setTheme('dark')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                        <span>Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 2rem;">
+                <label><strong>Gradient Lines</strong></label>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" id="gradient-lines-enabled" onchange="toggleGradientLines()" style="width: 20px; height: 20px; cursor: pointer;">
+                        <span>Enable animated gradient lines on side edges</span>
+                    </label>
+                </div>
+                <small style="display: block; margin-top: 0.5rem; color: var(--text-light);">Toggle the colorful animated gradient lines on the left and right edges of the page</small>
+            </div>
+            <div class="form-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary btn-block" onclick="openUserGuideModal()">📖 User Guide</button>
+            </div>
+            <div class="form-group" style="margin-top: 1rem;">
+                <button class="btn btn-primary btn-block" onclick="openRulesPoliciesModal()">📋 Rules & Policies</button>
+            </div>
+            <div class="form-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary btn-block" onclick="openContactModal()">📍 Edit Contact Information</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Guide Modal -->
+    <div class="modal" id="user-guide-modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeUserGuideModal()">&times;</span>
+            <h2>📖 User Guide</h2>
+            <div id="user-guide-content">
+                <!-- User guide content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules and Policies Modal -->
+    <div class="modal" id="rules-policies-modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeRulesPoliciesModal()">&times;</span>
+            <h2>📋 Wonder Electronics - Rules & Policies</h2>
+            <div id="rules-policies-content">
+                <!-- Rules and policies content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- User Guide Management Modal -->
+    <div class="modal" id="user-guide-admin-modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeUserGuideAdminModal()">&times;</span>
+            <h2>Manage User Guide</h2>
+            <div id="user-guide-admin-list">
+                <!-- User guide items will be loaded here -->
+            </div>
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" onclick="addNewUserGuideItem()">Add New Guide Item</button>
+                <button type="button" class="btn btn-secondary" onclick="closeUserGuideAdminModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules and Policies Management Modal -->
+    <div class="modal" id="rules-policies-admin-modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeRulesPoliciesAdminModal()">&times;</span>
+            <h2>Manage Rules & Policies</h2>
+            <div id="rules-policies-admin-list">
+                <!-- Rules and policies items will be loaded here -->
+            </div>
+            <div class="form-actions" style="margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" onclick="addNewRulesPoliciesItem()">Add New Policy Item</button>
+                <button type="button" class="btn btn-secondary" onclick="closeRulesPoliciesAdminModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Management Modal -->
+    <div class="modal" id="about-modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeAboutModal()">&times;</span>
+            <h2>Manage About Us</h2>
+            <form id="about-form">
+                <div class="form-group">
+                    <label for="about-title">Title</label>
+                    <input type="text" id="about-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="about-text">About Us Text</label>
+                    <textarea id="about-text" rows="10" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="about-image">Image URL</label>
+                    <input type="text" id="about-image" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save About Us</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAboutModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Analytics Modal -->
+    <div class="modal" id="product-analytics-modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="close" onclick="closeProductAnalyticsModal()">&times;</span>
+            <h2>📊 Product Analytics</h2>
+            <div id="analytics-content">
+                <!-- Analytics content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Data Verification Modal -->
+    <div class="modal" id="clear-data-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <span class="close" onclick="closeClearDataModal()">&times;</span>
+            <h2 style="color: var(--danger-color); margin-bottom: 1rem;">⚠️ Clear All Data</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                This action will permanently delete all products, orders, and cart items. 
+                Please verify your admin credentials to proceed.
+            </p>
+            <form id="clear-data-form" onsubmit="event.preventDefault(); verifyAndClearData();">
+                <div class="form-group">
+                    <label for="clear-data-email">Admin Email</label>
+                    <input type="email" id="clear-data-email" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="clear-data-password">Admin Password</label>
+                    <input type="password" id="clear-data-password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger btn-block">Clear All Data</button>
+                    <button type="button" class="btn btn-secondary btn-block" onclick="closeClearDataModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logo Management Modal -->
+    <div class="modal" id="logo-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close" onclick="closeLogoModal()">&times;</span>
+            <h2>Manage Logo</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Upload a logo image or enter an image URL. The logo will appear in the circular frame in the navigation bar on all pages.</p>
+            
+            <!-- Logo Preview -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="display: inline-block; width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid var(--border-color); background: rgba(255,255,255,0.1);">
+                    <img id="logo-preview" src="" alt="Logo Preview" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-light); font-size: 0.9rem;">Preview</p>
+            </div>
+            
+            <form id="logo-form" onsubmit="saveLogo(event)">
+                <div class="form-group">
+                    <label>Upload Logo Image</label>
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem;">
+                        <label style="cursor: pointer; padding: 0.75rem 1.5rem; background-color: var(--primary-color); color: var(--white); border-radius: 0.5rem; display: inline-block; transition: all 0.3s;">
+                            <input type="file" id="logo-file-upload" accept="image/*" style="display: none;" onchange="handleLogoFileUpload(this)">
+                            📁 Upload from Local Disk
+                        </label>
+                        <span style="color: var(--text-light);">or</span>
+                        <span style="color: var(--text-light); font-size: 0.9rem;">Enter URL below</span>
+                    </div>
+                    <small style="display: block; margin-top: 0.5rem; color: var(--text-light);">Upload an image file (JPG, PNG, GIF) or enter an image URL. Recommended size: 200x200px or larger square image.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="logo-url-input">Image URL</label>
+                    <input type="url" id="logo-url-input" placeholder="https://example.com/logo.png" oninput="handleLogoUrlInput(this.value)">
+                    <small style="display: block; margin-top: 0.5rem; color: var(--text-light);">Enter the full URL of your logo image. The image will be displayed in a circular frame.</small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Logo</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeLogoModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sub-Admins Management Modal -->
+    <div class="modal" id="sub-admins-modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeSubAdminsModal()">&times;</span>
+            <h2>Manage Sub-Admins</h2>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Create and manage additional admin accounts for your workers. You can assign specific permissions to control what each sub-admin can access.</p>
+            
+            <div class="form-group" style="margin-bottom: 2rem;">
+                <button class="btn btn-primary" onclick="openAddSubAdminForm()">+ Add New Sub-Admin</button>
+            </div>
+            
+            <div id="sub-admins-list" style="margin-top: 1.5rem;">
+                <!-- Sub-admins will be loaded here -->
+            </div>
+            
+            <!-- Add/Edit Sub-Admin Form -->
+            <div id="sub-admin-form-container" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                <h3 id="sub-admin-form-title">Add New Sub-Admin</h3>
+                <form id="sub-admin-form" onsubmit="saveSubAdmin(event)">
+                    <input type="hidden" id="sub-admin-id" value="">
+                    <div class="form-group">
+                        <label for="sub-admin-email">Email</label>
+                        <input type="email" id="sub-admin-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sub-admin-password">Password</label>
+                        <input type="password" id="sub-admin-password" class="form-control">
+                        <small style="color: var(--text-light); display: block; margin-top: 0.5rem;">Leave blank when editing to keep current password</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Select which features this sub-admin can access:</p>
+                        <div id="permissions-list" style="max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1rem;">
+                            <!-- Permissions checkboxes will be loaded here -->
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <button type="button" class="btn btn-secondary btn-small" onclick="selectAllPermissions()">Select All</button>
+                            <button type="button" class="btn btn-secondary btn-small" onclick="deselectAllPermissions()">Deselect All</button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Sub-Admin</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelSubAdminForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
